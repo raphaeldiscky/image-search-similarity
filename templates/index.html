@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Similarity Search</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <script>
+      updateList = function () {
+        var input = document.getElementById('getFile')
+        var output = document.getElementById('fileName')
+
+        output.innerHTML =
+          '<h4> Nama File: ' + input.files.item(0).name + '</h4>'
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mt-lg-5 mb-lg-5">Image Similarity Search</h1>
+      <h4>
+        Dataset diambil dari:
+        <a
+          target="_blank"
+          href="https://www.kaggle.com/lasaljaywardena/animal-images-dataset"
+          >Animal Images Dataset [Kaggle]</a
+        >
+      </h4>
+      <h4>Dengan total data sebanyak 11.959 gambar</h4>
+      <br />
+      <form
+        method="POST"
+        class="text-center my-lg-5"
+        enctype="multipart/form-data"
+      >
+        <label class="btn btn-primary" for="getFile"> Upload File </label>
+        <input
+          type="file"
+          id="getFile"
+          style="display: none"
+          name="query_img"
+          onchange="javascript:updateList()"
+        />
+        <br />
+        <br />
+        <input type="submit" class="btn btn-primary" />
+      </form>
+      <br />
+      <div class="mb-lg-5" id="fileName"></div>
+      <h2>Query:</h2>
+      <div class="text-center">
+        {% if query_path %}
+        <img class="rounded" src="{{ query_path }}" width="300px" />
+        {% endif %}
+      </div>
+      <br />
+      <h2>Hasil:</h2>
+      <p>Sorted by similarity metric</p>
+      <div>
+        {% for score in scores %}
+        <figure style="float: left; margin-right: 20px; margin-bottom: 20px">
+          <img class="rounded" src="{{ score[1] }}" height="150px" />
+          <figcaption>Similarity metric: <b>{{ score[0] }}</b></figcaption>
+        </figure>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
