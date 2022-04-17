@@ -8,7 +8,7 @@ pip install -r requirements.txt
 
 # Then fc6 features are extracted and saved on static/feature
 # Note that it takes time for the first time because Keras downloads the VGG weights.
-python offline.py
+python save_feature.py
 
 # Now you can do the search via localhost:5000
 python server.py
